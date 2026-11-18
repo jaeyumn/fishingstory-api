@@ -1,0 +1,14 @@
+app:
+  dev:
+    seed-terms: ${DEV_SEED_TERMS:true}
+    seed-points: ${DEV_SEED_POINTS:false}
+  jwt:
+    ephemeral-key: ${JWT_EPHEMERAL_KEY:true}
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:${POSTGRES_PORT:5432}/${POSTGRES_DB}}
+    username: ${DB_USERNAME:${POSTGRES_USER}}
+    password: ${DB_PASSWORD:${POSTGRES_PASSWORD}}

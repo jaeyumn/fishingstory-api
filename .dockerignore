@@ -1,0 +1,10 @@
+.git
+.gradle
+build
+.env
+.idea
+*.iml
+Dockerfile*
+docker-compose*.yml
+README.md
+gradlew.bat

@@ -1,0 +1,13 @@
+app:
+  id:
+    worker-id: ${SNOWFLAKE_WORKER_ID}
+  image:
+    # 설정 누락으로 사진 기능이 조용히 꺼지지 않도록 운영은 true/false를 명시해야 기동한다.
+    enabled: ${R2_ENABLED}
+
+# 운영에서는 API 문서를 인증 회원에게도 제공하지 않는다.
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

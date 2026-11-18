@@ -1,0 +1,63 @@
+server:
+  forward-headers-strategy: none
+
+logging:
+  pattern:
+    level: "%5p [requestId=%X{requestId}]"
+
+app:
+  magazine:
+    images:
+      enabled: ${MAGAZINE_R2_ENABLED:false}
+  image:
+    enabled: ${R2_ENABLED:false}
+  jwt:
+    issuer: ${JWT_ISSUER:fishingstory-api}
+    audience: ${JWT_AUDIENCE:fishingstory-app}
+    private-key-base64: ${JWT_PRIVATE_KEY_BASE64:}
+    public-key-base64: ${JWT_PUBLIC_KEY_BASE64:}
+    ephemeral-key: false
+  id:
+    worker-id: ${SNOWFLAKE_WORKER_ID:0}
+  password:
+    memory-kib: ${PASSWORD_ARGON2_MEMORY_KIB:19456}
+    iterations: ${PASSWORD_ARGON2_ITERATIONS:2}
+    parallelism: ${PASSWORD_ARGON2_PARALLELISM:1}
+
+spring:
+  data:
+    redis:
+      host: ${VALKEY_HOST:localhost}
+      port: ${VALKEY_PORT:6379}
+      password: ${VALKEY_PASSWORD:}
+      connect-timeout: 2s
+      timeout: 2s
+  application:
+    name: fishingstory-api
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-init-sql: SET search_path TO fishingstory, public
+  flyway:
+    default-schema: fishingstory
+    schemas: fishingstory
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: fishingstory
+        # PostgreSQL 오류 상세에 이메일·해시 등 입력값이 포함될 수 있다.
+        jdbc.log.errors: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
